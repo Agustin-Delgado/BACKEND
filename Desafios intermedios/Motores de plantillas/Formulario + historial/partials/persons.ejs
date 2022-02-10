@@ -1,0 +1,26 @@
+<h1>Historial</h1>
+
+    <% if(Object.keys(persons).length === 0) { %>
+        
+        <h3>No hay personas</h3>
+        
+    <% } else { %>
+
+<table>
+
+
+        <tr>
+        <th>Nombre</th>
+        <th>Apellido</th>
+        <th>Edad</th>
+    </tr>
+        <% persons.forEach(function(person) { %>
+            <tr>
+                <td><%= person.nombre %></td>
+                <td><%= person.apellido %></td>
+                <td><%= person.edad %></td>
+            </tr>
+        <% }); %>
+        </table>
+    <% } %>
+
