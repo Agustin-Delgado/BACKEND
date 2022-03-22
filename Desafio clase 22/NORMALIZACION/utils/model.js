@@ -31,13 +31,10 @@ module.exports = class Modelo {
                 mensajes: list
             }
 
-            const author = new schema.Entity('author');
-            const post = new schema.Entity('post', {
-                author: author
-            }, { idAttribute: '_id' });
-            const posts = new schema.Entity('posts', {
-                posts: [post]
-            });
+            const author = new schema.Entity("author");
+            const post = new schema.Entity("post", { author: author }, { idAttribute: "_id" });
+            const posts = new schema.Entity("posts", { posts: [post] });
+
 
             const normalizedData = normalize(data, posts);
 

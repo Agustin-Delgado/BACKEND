@@ -31,11 +31,14 @@ socket.on('messages', mensajes => {
 
     console.log(mensajes);
     console.log(denormalizedData);
-});
 
-/* function render(data) {
-    console.log(data)
-    const html = data.map((message) => {
+    const denormalizeDataSize = Object.keys(denormalizedData).length;
+    const normalizedDataSize = Object.keys(mensajes.result).length;
+    const reducedDataPercentage = (normalizedDataSize - denormalizeDataSize) / normalizedDataSize * 100;
+
+    document.getElementById('compresion').innerHTML = `Compresión: ${reducedDataPercentage}%`;
+
+    const html = denormalizedData.mensajes.map((message) => {
         return (`
             <div>
                 <strong style="color:blue;">${message.author.name}</strong> <span style="color:brown;">[${message.date}]<span> :
@@ -43,7 +46,4 @@ socket.on('messages', mensajes => {
             </div>`)
     }).join(" ");
     document.getElementById('messages').innerHTML = html;
-}
-
-socket.on('messages', function (data) { render(data); });
- */
+});
