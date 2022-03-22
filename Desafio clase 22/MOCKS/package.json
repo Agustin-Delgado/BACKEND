@@ -1,0 +1,21 @@
+{
+  "type": "module",
+  "name": "kenx",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "author": "Agustin Delgado",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.3",
+    "knex": "^1.0.3",
+    "mysql": "^2.18.1"
+  },
+  "devDependencies": {
+    "@faker-js/faker": "^6.0.0"
+  }
+}

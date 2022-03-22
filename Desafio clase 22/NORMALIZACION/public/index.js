@@ -10,13 +10,30 @@ function addMessage() {
             alias: document.getElementById('alias').value,
             avatar: document.getElementById('avatar').value
         },
-        text: document.getElementById('text').value
+        text: document.getElementById('text').value,
+        date: new Date().toLocaleString()
     }
     socket.emit('new-message', mensaje);
     return false;
 }
 
-function render(data) {
+socket.on('messages', mensajes => {
+
+    const author = new normalizr.schema.Entity('author');
+    const post = new normalizr.schema.Entity('post', {
+        author: author
+    }, { idAttribute: '_id' });
+    const posts = new normalizr.schema.Entity('posts', {
+        posts: [post]
+    });
+
+    const denormalizedData = normalizr.denormalize(mensajes.result, posts, mensajes.entities);
+
+    console.log(mensajes);
+    console.log(denormalizedData);
+});
+
+/* function render(data) {
     console.log(data)
     const html = data.map((message) => {
         return (`
@@ -29,3 +46,4 @@ function render(data) {
 }
 
 socket.on('messages', function (data) { render(data); });
+ */

@@ -1,65 +1,53 @@
-const fs = require('fs');
+const config = require("../utils/config");
+const mongoose = require("mongoose");
 const { schema, normalize, denormalize } = require("normalizr");
 const util = require("util");
 
+const URL = config.mongodb.url;
+
+mongoose.connect(URL)
+
 module.exports = class Modelo {
 
-    constructor(fileRoute) {
-        this.fileRoute = fileRoute
-    }
-
-    async getNextId() {
-        const data = await this.listarTabla();
-        let nextId = 1;
-        if (data.length > 0) {
-            nextId = data[data.length - 1].id + 1;
-        }
-        return nextId;
+    constructor(collectionName, schema) {
+        this.collection = mongoose.model(collectionName, schema);
     }
 
     async insertarArticulo(data) {
         try {
-            const dataFile = await fs.promises.readFile(this.fileRoute, 'utf8')
-            const dataJson = JSON.parse(dataFile)
-            const nextId = await this.getNextId()
-            data.id = nextId
-            dataJson.push(data)
-            await fs.promises.writeFile(this.fileRoute, JSON.stringify(dataJson))
-        } catch (error) {
-            console.log(error)
+            const insert = await this.collection.create(data);
+            return insert;
+        }
+        catch (error) {
+            console.log(error);
         }
     }
 
     async listarTabla() {
         try {
-            const data = await fs.promises.readFile(this.fileRoute, 'utf8')
-            const dataJson = JSON.parse(data)
+            const list = await this.collection.find({});
+            const data = {
+                id: 'mensajes',
+                mensajes: list
+            }
 
-            const author = new schema.Entity("author", {}, { idAttribute: "id" });
-            const post = new schema.Entity("post", { author: author });
-            const posts = new schema.Array('posts', {
-                mensajes: post
+            const author = new schema.Entity('author');
+            const post = new schema.Entity('post', {
+                author: author
+            }, { idAttribute: '_id' });
+            const posts = new schema.Entity('posts', {
+                posts: [post]
             });
 
-            const normalizedData = normalize(dataJson, posts);
+            const normalizedData = normalize(data, posts);
 
-            return normalizedData;
+            return normalizedData
+        }
 
-        } catch (error) {
-            console.log(error)
+        catch (error) {
+            console.log(error);
         }
     }
 
-
-    async denormalizar(data) {
-        const author = new schema.Entity("author", {}, { idAttribute: "id" });
-        const post = new schema.Entity("post", { author });
-        const messages = new schema.Array(post);
-
-        const normalizedData = denormalize(data, messages);
-
-        return util.inspect(normalizedData, false, 12, true);
-
-    }
 }
 
