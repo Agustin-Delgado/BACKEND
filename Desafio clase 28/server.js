@@ -126,9 +126,9 @@ app.get("/info", (req, res) => {
     });
 });
 
-app.get("/api/randoms", (req, res) => {
+app.get("/api/randoms", async (req, res) => {
     const cantidad = req.query.cant || 100000000;
-    const calcular = fork(__dirname + "/src/utils/randomNumbers.js", [cantidad]);
+    const calcular = fork(__dirname + "/src/utils/randomNumbers.js");
     calcular.send(cantidad);
     calcular.on("message", (numeros) => {
         res.json(numeros);
