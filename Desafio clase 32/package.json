@@ -8,6 +8,9 @@
     "start": "0x server.js",
     "test": "node src/utils/autocannon.js"
   },
+  "engines": {
+    "node": "16.14.0"
+  },
   "author": "Agustin Delgado",
   "license": "ISC",
   "dependencies": {
