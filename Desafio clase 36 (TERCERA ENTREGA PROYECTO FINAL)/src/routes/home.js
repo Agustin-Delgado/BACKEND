@@ -1,4 +1,5 @@
 import express from 'express';
+import sendEmail from '../utils/sendEmail.js';
 import { productDao, usersDao } from '../daos/index.js';
 
 const home = express.Router();
@@ -75,7 +76,8 @@ home.get("/cart", (req, res) => {
 
 home.post("/cart/buy", (req, res) => {
     if (req.isAuthenticated()) {
-        usersDao.findById(req.user.email).then(user => {
+        usersDao.findById(req.user.email).then(async () => {
+            sendEmail(process.env.ADMIN_EMAIL, req.user.email, await usersDao.getCartItems(req.user.email))
             usersDao.updateOne(req.user.email, {
                 cart: []
             })
