@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
+        integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/normalizr@3.6.2/dist/normalizr.browser.min.js"></script>
+    <title>Load products</title>
+
+</head>
+
+<body>
+    <div class="container mt-3">
+        <div class="jumbotron">
+          <h1 style="color: blue">Ingrese un producto</h1>
+          <br />
+          <form action="/home/load-product" method="post">
+            <div class="form-group">
+              <label class="form-label" for=""><b>Ingresar nombre</b></label>
+              <input
+                class="form-control"
+                type="text"
+                name="title"
+                placeholder="title"
+                required
+              />
+            </div>
+            <div class="form-group">
+              <label class="form-label" for=""><b>Ingresar precio</b></label>
+              <input
+                class="form-control"
+                type="text"
+                name="price"
+                placeholder="price"
+                required
+              />
+            </div>
+            <div class="form-group">
+              <label class="form-label" for=""><b>Ingresar miniatura</b></label>
+              <input
+                class="form-control"
+                type="text"
+                name="tumbnail"
+                placeholder="tumbnail"
+                required
+              />
+            </div>
+            <div class="form-group">
+              <label class="form-label" for=""><b>Ingresar descripción</b></label>
+              <input
+                class="form-control"
+                type="text"
+                name="description"
+                placeholder="description"
+                required
+              />
+            </div>
+            <div class="form-group">
+              <label class="form-label" for=""><b>Ingresar stock</b></label>
+              <input
+                class="form-control"
+                type="text"
+                name="stock"
+                placeholder="stock"
+                required
+              />
+            </div>
+            <button type="submit" class="btn btn-success mt-3 mb-5">
+              Agregar producto
+            </button>
+          </form>
+        </div>
+</body>
